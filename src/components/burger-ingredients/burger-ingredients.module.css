@@ -1,9 +1,46 @@
 .window {
-    position: absolute;
-    width: 30%;
-    height: 900px;
-    top: 126px;
+    position: relative;
+    width: 600px;
+    min-height: 900px;
+    /* top: 128px; */
     background: #131316;
-    border: 2px solid #4C4CFF;
-    left: 19%;
+    /* left: 24%; */
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.heading {
+    position: relative;
+    top: 40px;
+    /* border: 1px dashed #4C4CFF; */
+}
+.custom_scroll {
+    position: relative;
+    top: 150px;
+    overflow-y: auto;
+    min-height: fit-content;
+    max-height: 55vh;
+  }
+  .custom_scroll::-webkit-scrollbar {
+    width: 10px;
+  }
+  .custom_scroll::-webkit-scrollbar-track {
+    background: #2f2f37;
+  }
+  .custom_scroll::-webkit-scrollbar-thumb {
+    background: #8585ad;
+  }
+
+.cards {
+    position: relative;
+    width: 100%;
+    /* top: 200px; */
+    display: flex;
+    /* justify-content: space-around; */
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.cards > div {
+    margin: 20px;
 }

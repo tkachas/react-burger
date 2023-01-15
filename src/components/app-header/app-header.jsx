@@ -17,19 +17,19 @@ export default function AppHeader() {
         <a className={`${headerStyles.header_link} ${headerStyles.active}`}
            href="/"
         >
-                  Конструктор
+                  <p className="text text_type_main-default">Конструктор</p>
         </a>
       </div>
       <div className={headerStyles.option}>
         <ListIcon type="secondary"/>
         <a className={headerStyles.header_link} href="/">
-                  Лента заказов
+          <p className="text text_type_main-default">Лента заказов</p>
         </a>
       </div>
       <div className={`${headerStyles.option} ${headerStyles.profile}`}>
         <ProfileIcon type="secondary"/>
         <a className={`${headerStyles.header_link}`} href="/">
-                  Личный кабинет
+          <p className="text text_type_main-default">Личный кабинет</p>
         </a>
       </div>
     </div>

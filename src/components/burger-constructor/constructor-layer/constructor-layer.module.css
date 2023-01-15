@@ -1,0 +1,20 @@
+.card {
+    position: relative;
+    /* min-height: 80px; */
+    width: 100%;
+    /* left: 40px; */
+    margin-top: 0px;
+    /* margin-right: 15px; */
+    margin-bottom: 15px;
+    display: grid;
+    grid-template-columns: 40px 90%;
+    align-items: center;
+    /* border: 1px solid red; */
+}
+/* .layer {
+    position: relative;
+    width: 100%;
+}
+.layer > div {
+    width: 100%;
+} */

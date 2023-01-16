@@ -5,8 +5,8 @@ body {
 .content {
     position: relative;
     top: 128px;
-    width: 1250px;
+    max-width: 1250px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }

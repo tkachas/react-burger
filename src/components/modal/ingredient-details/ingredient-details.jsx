@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../modal.module.css';
+import PropTypes from 'prop-types';
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -57,4 +58,8 @@ export default function IngredientDetails({info}) {
     </div>
   </>
   )
+}
+
+IngredientDetails.propTypes = {
+    info: PropTypes.object
 }

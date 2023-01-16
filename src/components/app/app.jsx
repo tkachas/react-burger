@@ -35,7 +35,7 @@ function App() {
             ...dataError,
             hasError: true,
             errorName: e.name,
-            text: `no data recieved due to ${e.name}`,
+            text: `No data recieved due to ${e.name}. Try reloading the page later.`,
             errorMessage: e.message,
           });
         });
@@ -48,21 +48,21 @@ function App() {
 
   return (
     <>
-      {success && (
+      {success && !hasError && (
         <div className={'content'}>
           <BurgerIngredients ingredients={data}/>
           <BurgerConstructor ingredients={data}/>
         </div>
       )}
       {(hasError || !success) && (
-        <>
+        <div style={{marginLeft: "50%", marginTop: "50%", transform: "translate(-50%, -50%)"}}>
           <h1>
             {text}
           </h1>
           <p>
             {errorName}: {errorMessage}
           </p>
-        </>
+        </div>
       )}
       <AppHeader/>
     </>

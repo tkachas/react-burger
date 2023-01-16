@@ -1,5 +1,6 @@
 import React from 'react';
 import tabStyle from './custom-tab.module.css';
+import PropTypes from 'prop-types';
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -20,4 +21,9 @@ export default function CustomTab(props) {
       </Tab>
     </div>
   )
+}
+
+CustomTab.propTypes = {
+  switch: PropTypes.string.isRequired,
+  setSwitch: PropTypes.func.isRequired
 }

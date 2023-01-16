@@ -1,5 +1,6 @@
 import React from 'react';
 import constructorStyles from './burger-constructor.module.css';
+import PropTypes from 'prop-types';
 
 import ConstructorLayer from './constructor-layer/constructor-layer';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -49,4 +50,8 @@ export default function BurgerConstructor(props) {
         )}
     </>
   )
+}
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.array
 }

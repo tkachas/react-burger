@@ -1,6 +1,7 @@
 import React from 'react';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import layerStyles from './constructor-layer.module.css';
+import PropTypes from 'prop-types';
 
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -43,4 +44,9 @@ export default function ConstructorLayer(props) {
       </div>
     </div>
   )
+}
+
+ConstructorLayer.propTypes = {
+  type: PropTypes.string,
+  layer: PropTypes.object.isRequired
 }

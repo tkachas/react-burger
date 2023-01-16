@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import modalStyles from './modal.module.css';
+import PropTypes from 'prop-types';
 
 import IngredientDetails from './ingredient-details/ingredient-details';
 import OrderDetails from './order-details/order-details';
@@ -44,3 +45,13 @@ function ModalOverlay({ handleClose }) {
       ></div>
     );
   }
+
+Modal.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+  modalType: PropTypes.string.isRequired,
+  info: PropTypes.object
+}
+
+ModalOverlay.propTypes = {
+  handleClose: PropTypes.func.isRequired
+}

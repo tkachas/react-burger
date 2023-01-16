@@ -1,5 +1,6 @@
 import React from 'react';
 import ingredientsStyles from './burger-ingredients.module.css';
+import PropTypes from 'prop-types';
 
 import CustomTab from './custom-tab/custom-tab';
 import Card from './card/card';
@@ -14,6 +15,8 @@ export default function BurgerIngredients(props) {
   const bun = props.ingredients.filter((ingr) => ingr.type === "bun");
   const sauce = props.ingredients.filter((ingr) => ingr.type === "sauce");
   const main = props.ingredients.filter((ingr) => ingr.type === "main");
+
+
 
   const handleModalClose = () => {
     setModalOpen(false);
@@ -65,4 +68,8 @@ export default function BurgerIngredients(props) {
         )}
     </>
   )
+}
+
+BurgerIngredients.propTypes = {
+    ingredients: PropTypes.array
 }

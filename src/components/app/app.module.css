@@ -2,11 +2,27 @@ body {
     display: flex;
     justify-content: center;
 }
+
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 40px;
+    width: 100vh;
+}
+
 .content {
     position: relative;
-    top: 128px;
+    /* top: 100px; */
     max-width: 1250px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.error {
+    margin-left: "50%";
+    margin-top: "50%";
+    transform: "translate(-50%, -50%)";
 }

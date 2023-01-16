@@ -1,9 +1,10 @@
 .header {
-    position: absolute;
+    position: relative;
+    width: 1350px;
     height: 88px;
-    left: 2%;
-    right: 2%;
-    top: 40px;
+    /* left: 2%; */
+    /* right: 2%; */
+    /* top: 40px; */
     font-size: 16px;
 
     background: #1C1C21;
@@ -18,12 +19,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 
 .optionsBar {
     position: relative;
     width: 1300px;
     display: flex;
+    justify-content: space-between;
     
 }
 
@@ -60,18 +63,23 @@
 }
 
 .profile {
-    position: absolute;
+    position: relative;
+    align-self:flex-end;
+    min-width: 400px;
     right: 0px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .logo_container {
-    position: absolute;
-    width: 100%;
+    position: relative;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    align-self: center;
+    justify-self: center;
 }
 .logo_container > div {
     width: 289.15px;
@@ -80,6 +88,10 @@
     /* interface/modal-bg */
     
     background: #1C1C21;
-    /* interface/accent */
-    
+    /* interface/accent */    
+}
+
+.partition {
+    display: flex;
+    min-width: 400px;
 }

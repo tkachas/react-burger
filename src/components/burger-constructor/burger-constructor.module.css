@@ -12,12 +12,13 @@
 
 .inner_constr {
     position: relative;
-    top: 100px;
+    /* top: 100px; */
     /* margin-left: 15px; */
     height: 650px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    margin-top: 115px;
 }
 .inner_constr::-webkit-scrollbar {
     width: 10px;
@@ -30,11 +31,11 @@ background: #8585ad;
 }
 
 .final_price {
-    position: absolute;
+    position: relative;
     /* border: 1px solid red; */
-    bottom: 60px;
-    right: 25px;
     display: flex;
+    justify-content: end;
+    padding-right: 30px;
 }
 
 .total {

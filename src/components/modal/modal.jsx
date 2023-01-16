@@ -24,12 +24,12 @@ export default function Modal({handleClose, modalType, info}) {
     <ModalOverlay handleClose={handleClose}/>
         {modalType === "ingredientDetails" && (
             <div className={modalStyles.modal_wind_ing}>
-                <IngredientDetails info={info}/>
+                <IngredientDetails info={info} handleClose={handleClose}/>
             </div>
         )}
         {modalType === "orderDetails" && (
             <div className={modalStyles.modal_wind_ord}>
-                <OrderDetails/>
+                <OrderDetails handleClose={handleClose}/>
             </div>
         )}
    </>

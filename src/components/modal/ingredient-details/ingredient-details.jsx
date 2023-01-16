@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default function IngredientDetails({info}) {
+export default function IngredientDetails({info, handleClose}) {
 
   return (
     <>
@@ -12,7 +12,9 @@ export default function IngredientDetails({info}) {
         <p className="text text_type_main-large" style={{textAlign: 'start'}}>
             Детали ингредиента
         </p>
-        <CloseIcon/>
+        <div onClick={handleClose} style={{cursor: "pointer"}}>
+            <CloseIcon/>
+        </div>
         </div>
         <div className={styles.modal_content}>
             <img
@@ -61,5 +63,6 @@ export default function IngredientDetails({info}) {
 }
 
 IngredientDetails.propTypes = {
-    info: PropTypes.object
+    info: PropTypes.object,
+    handleClose: PropTypes.func
 }

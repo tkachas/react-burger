@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import './app.css';
+import styles from './app.module.css';
 
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -19,9 +19,9 @@ function App() {
 
   const ingredientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
   useEffect(()=>{
-    const fetchIngredients = () => {
+    const fetchIngredients = async () => {
       fetch(ingredientsUrl)
-        .then((res) => res.json())
+        .then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
         .then((data) => {
           setIngredientsData({
             ...ingredientsData,
@@ -41,7 +41,7 @@ function App() {
         });
     }
     fetchIngredients();
-  },[dataError, ingredientsData]);
+  },[ingredientsData.success]);
 
   const {success, data} = ingredientsData;
   const {hasError, errorName, text, errorMessage} = dataError;
@@ -49,7 +49,7 @@ function App() {
   return (
     <>
       {success && !hasError && (
-        <div className={'content'}>
+        <div className={styles.content}>
           <BurgerIngredients ingredients={data}/>
           <BurgerConstructor ingredients={data}/>
         </div>

@@ -1,0 +1,50 @@
+.window {
+    position: relative;
+    width: 600px;
+    height: 900px;
+    /* top: 128px; */
+    background: #131316;
+    /* left: 51%; */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.inner_constr {
+    position: relative;
+    /* top: 100px; */
+    /* margin-left: 15px; */
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    margin-top: 115px;
+}
+.inner_constr::-webkit-scrollbar {
+    width: 10px;
+}
+.inner_constr::-webkit-scrollbar-track {
+background: #2f2f37;
+}
+.inner_constr::-webkit-scrollbar-thumb {
+background: #8585ad;
+}
+
+.final_price {
+    position: relative;
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: end;
+    padding-right: 30px;
+}
+
+.total {
+    width: 110px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.icon {
+    font-size: 30px;
+}

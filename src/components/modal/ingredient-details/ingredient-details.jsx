@@ -1,8 +1,11 @@
 import React from "react";
 import styles from "../modal.module.css";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-export default function IngredientDetails({ info }) {
+export default function IngredientDetails() {
+  const info = useSelector((state) => state.ingredients.selectedIngredient);
+
   return (
     <>
       <div className={styles.modal_header}>

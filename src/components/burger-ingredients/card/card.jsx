@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import cardStyles from "./card.module.css";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
@@ -6,21 +6,19 @@ import { useDrag } from "react-dnd";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setModalOpen,
-  setSelectedIngredient,
-} from "../../../services/slices/ingredients/ingredients-slice";
-import { addIngredient } from "../../../services/slices/constructor/constructor-slice";
+import { setSelectedIngredient } from "../../../services/slices/ingredients/ingredients-slice";
 
 export default function Card(props) {
   const addedIngredients = useSelector(
     (state) => state.constrState.addedIngredients
   );
 
-  const count = addedIngredients.reduce(
-    (acc, ingredient) => (ingredient._id === props.type._id ? acc + 1 : acc),
-    0
-  );
+  const count = useMemo(() => {
+    return addedIngredients.reduce(
+      (acc, ingredient) => (ingredient._id === props.type._id ? acc + 1 : acc),
+      0
+    );
+  }, [addedIngredients, props.type._id]);
 
   const dispatch = useDispatch();
 
@@ -33,7 +31,6 @@ export default function Card(props) {
   });
 
   const handleModalOpen = () => {
-    dispatch(setModalOpen(true));
     dispatch(setSelectedIngredient(props.type));
   };
 

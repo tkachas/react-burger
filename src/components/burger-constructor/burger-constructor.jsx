@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useMemo } from "react";
 import constructorStyles from "./burger-constructor.module.css";
-import PropTypes from "prop-types";
 
 import ConstructorLayer from "./constructor-layer/constructor-layer";
-import DraggableIngredient from "./draggable-ingredient.js/draggable-ingredient";
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Button,
+  CurrencyIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../modal/order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addIngredient,
-  countPrice,
-  setOrderModalOpen,
+  clearOrder,
+  getOrder,
 } from "../../services/slices/constructor/constructor-slice";
 import { useDrop } from "react-dnd";
+
+import uuid from "react-uuid";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -22,27 +24,7 @@ export default function BurgerConstructor() {
   const addedIngredients = useSelector(
     (state) => state.constrState.addedIngredients
   );
-  const ingredients = useSelector((state) => state.ingredients.items);
-  const orderModalOpen = useSelector(
-    (state) => state.constrState.orderModalOpen
-  );
-
-  const finalPrice = () => {
-    if (!addedIngredients.length) return 0;
-    let sum = 0;
-    addedIngredients.map((el) => {
-      if (el.type === "bun") {
-        sum += el.price * 2;
-      } else {
-        sum += el.price;
-      }
-    });
-    return sum;
-  };
-
-  const bun = ingredients.filter((ingr) => ingr.type === "bun");
-  const sauce = ingredients.filter((ingr) => ingr.type === "sauce");
-  const main = ingredients.filter((ingr) => ingr.type === "main");
+  const orderDetails = useSelector((state) => state.constrState.orderDetails);
 
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: "ingredient",
@@ -56,34 +38,20 @@ export default function BurgerConstructor() {
     }),
   });
 
-  const sortedIngredients = React.useMemo(() => {
-    const bun = addedIngredients.find(
-      (ingredient) => ingredient.type === "bun"
-    );
-
-    // Убираем булку из списка ингредиентов
-    const nonBunIngredients = addedIngredients.filter(
-      (ingredient) => ingredient.type !== "bun"
-    );
-
-    if (bun) {
-      // Добавляем свойство bunType к булкам
-      const topBun = { ...bun, bunType: "top" };
-      const bottomBun = { ...bun, bunType: "bottom" };
-
-      // Вставляем булки в начало и конец списка ингредиентов
-      return [topBun, ...nonBunIngredients, bottomBun];
-    } else {
-      return nonBunIngredients;
-    }
+  const finalPrice = useMemo(() => {
+    if (!addedIngredients.length) return 0;
+    let sum = 0;
+    addedIngredients.map((el) => (sum += el.price));
+    return sum;
   }, [addedIngredients]);
 
   const handleModalOpen = () => {
-    dispatch(setOrderModalOpen(true));
+    const ingredientIds = addedIngredients.map((el) => el._id);
+    dispatch(getOrder(ingredientIds));
   };
 
   const handleModalClose = () => {
-    dispatch(setOrderModalOpen(false));
+    dispatch(clearOrder(null));
   };
 
   return (
@@ -96,20 +64,14 @@ export default function BurgerConstructor() {
           ref={drop}
           style={isOver ? { backgroundColor: "#232328" } : {}}
         >
-          {/* <ConstructorLayer type={"top"} layer={bun[0]} />
-          <ConstructorLayer layer={sauce[0]} />
-          <ConstructorLayer layer={main[0]} />
-          <ConstructorLayer layer={sauce[1]} />
-          <ConstructorLayer layer={main[1]} />
-          <ConstructorLayer type={"bottom"} layer={bun[0]} /> */}
-          {sortedIngredients.length ? (
-            sortedIngredients.map((el, key) => {
+          {addedIngredients.length ? (
+            addedIngredients.map((el, key) => {
               let type = null;
               if (el.type === "bun" && key === 0) {
                 type = "top";
               } else if (
                 el.type === "bun" &&
-                key === sortedIngredients.length - 1
+                key === addedIngredients.length - 1
               ) {
                 type = "bottom";
               }
@@ -117,7 +79,7 @@ export default function BurgerConstructor() {
                 <ConstructorLayer
                   layer={el}
                   type={type}
-                  key={`${el._id}-${key}`}
+                  key={uuid()}
                   index={key}
                 />
               );
@@ -128,7 +90,7 @@ export default function BurgerConstructor() {
         </div>
         <div className={constructorStyles.final_price}>
           <div className={`mr-10 ${constructorStyles.total}`}>
-            <p className="text text_type_digits-medium">{finalPrice()}</p>
+            <p className="text text_type_digits-medium">{finalPrice}</p>
             <CurrencyIcon type="primary" className={constructorStyles.icon} />
           </div>
           <Button
@@ -141,7 +103,7 @@ export default function BurgerConstructor() {
           </Button>
         </div>
       </section>
-      {orderModalOpen && (
+      {orderDetails && (
         <Modal handleClose={handleModalClose}>
           <OrderDetails handleClose={handleModalClose} />
         </Modal>

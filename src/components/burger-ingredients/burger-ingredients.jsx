@@ -1,6 +1,5 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import ingredientsStyles from "./burger-ingredients.module.css";
-import PropTypes from "prop-types";
 
 import CustomTab from "./custom-tab/custom-tab";
 import Card from "./card/card";
@@ -8,10 +7,7 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../modal/ingredient-details/ingredient-details";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  setModalOpen,
-  setCurrentTab,
-} from "../../services/slices/ingredients/ingredients-slice";
+import { setSelectedIngredient } from "../../services/slices/ingredients/ingredients-slice";
 
 function getActiveTab(scrollTop, bunsRef, saucesRef, mainsRef) {
   const bunsTop = bunsRef.current.offsetTop;
@@ -27,15 +23,19 @@ function getActiveTab(scrollTop, bunsRef, saucesRef, mainsRef) {
   }
 }
 
-export default function BurgerIngredients(props) {
+export default function BurgerIngredients() {
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
   const mainsRef = useRef(null);
 
+  const [currentTab, setCurrentTab] = useState("one");
+
   const dispatch = useDispatch();
 
   const ingredients = useSelector((state) => state.ingredients.items);
-  const modalOpen = useSelector((state) => state.ingredients.modalOpen);
+  const selectedIngredient = useSelector(
+    (state) => state.ingredients.selectedIngredient
+  );
 
   const bun = ingredients.filter((ingr) => ingr.type === "bun");
   const sauce = ingredients.filter((ingr) => ingr.type === "sauce");
@@ -56,13 +56,17 @@ export default function BurgerIngredients(props) {
   }, []);
 
   const handleModalClose = () => {
-    dispatch(setModalOpen(false));
+    dispatch(setSelectedIngredient(null));
   };
 
   const handleScroll = (e) => {
     const scrollTop = e.target.scrollTop;
     const activeTab = getActiveTab(scrollTop, bunsRef, saucesRef, mainsRef);
-    dispatch(setCurrentTab(activeTab));
+    setCurrentTab(activeTab);
+  };
+
+  const handleTabChange = (value) => {
+    setCurrentTab(value);
   };
 
   return (
@@ -72,7 +76,7 @@ export default function BurgerIngredients(props) {
           Соберите бургер
         </p>
 
-        <CustomTab />
+        <CustomTab tab={currentTab} change={handleTabChange} />
         <div className={ingredientsStyles.custom_scroll}>
           <p
             className={`text text_type_main-medium ${ingredientsStyles.type_sauce}`}
@@ -109,7 +113,7 @@ export default function BurgerIngredients(props) {
           </div>
         </div>
       </section>
-      {modalOpen && (
+      {selectedIngredient && (
         <Modal handleClose={handleModalClose}>
           <IngredientDetails handleClose={handleModalClose} />
         </Modal>
@@ -117,7 +121,3 @@ export default function BurgerIngredients(props) {
     </>
   );
 }
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.array,
-};

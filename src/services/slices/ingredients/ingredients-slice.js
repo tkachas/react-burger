@@ -1,23 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+import { fetchIngredients, ingredientsURL } from "../../api";
+
+export const fetchIngredientsData = createAsyncThunk(
+  "ingredients/fetchIngredients",
+  async () => {
+    const response = await fetchIngredients(ingredientsURL);
+    return response.data;
+  }
+);
 
 export const ingredientsSlice = createSlice({
   name: "ingredients",
   initialState: {
-    items: [],
+    items: null,
     loading: false,
-    error: {},
+    error: null,
     success: false,
-    currentTab: "one",
-    modalOpen: false,
     selectedIngredient: null,
   },
   reducers: {
-    setCurrentTab: (state, action) => {
-      state.currentTab = action.payload;
-    },
-    setModalOpen: (state, action) => {
-      state.modalOpen = action.payload;
-    },
     setSelectedIngredient: (state, action) => {
       state.selectedIngredient = action.payload;
     },
@@ -30,6 +32,21 @@ export const ingredientsSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchIngredientsData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchIngredientsData.fulfilled, (state, action) => {
+        state.items = action.payload;
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(fetchIngredientsData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   },
 });
 

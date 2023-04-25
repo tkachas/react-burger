@@ -16,24 +16,14 @@ import layerStyles from "./constructor-layer.module.css";
 
 export default function ConstructorLayer(props) {
   const isLocked = props.type === "top" || props.type === "bottom";
-  const [isReleased, setIsReleased] = useState(false);
   const ref = useRef(null);
 
   const dispatch = useDispatch();
 
-  const handleEnd = () => {
-    setIsReleased(true);
-    setTimeout(() => setIsReleased(false), 50);
-  };
-
   const nameAddition = (name) => {
-    if (props.type === "top") {
-      return (name += " (верх)");
-    } else if (props.type === "bottom") {
-      return (name += " (низ)");
-    } else {
-      return name;
-    }
+    if (props.type === "top") return name + " (верх)";
+    if (props.type === "bottom") return name + " (низ)";
+    return name;
   };
 
   const handleDelete = () => {
@@ -87,7 +77,6 @@ export default function ConstructorLayer(props) {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    end: handleEnd,
   });
 
   drag(drop(ref));
@@ -115,5 +104,5 @@ export default function ConstructorLayer(props) {
 
 ConstructorLayer.propTypes = {
   type: PropTypes.string,
-  index: PropTypes.number,
+  index: PropTypes.number.isRequired,
 };

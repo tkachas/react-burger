@@ -4,28 +4,16 @@ import PropTypes from "prop-types";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default function CustomTab(props) {
+export default function CustomTab({ tab, change }) {
   return (
     <div className={tabStyle.custom_tab}>
-      <Tab
-        value="one"
-        active={props.switch === "one"}
-        onClick={props.setSwitch}
-      >
+      <Tab value="one" active={tab === "one"} onClick={change}>
         Булки
       </Tab>
-      <Tab
-        value="two"
-        active={props.switch === "two"}
-        onClick={props.setSwitch}
-      >
+      <Tab value="two" active={tab === "two"} onClick={change}>
         Соусы
       </Tab>
-      <Tab
-        value="three"
-        active={props.switch === "three"}
-        onClick={props.setSwitch}
-      >
+      <Tab value="three" active={tab === "three"} onClick={change}>
         Начинки
       </Tab>
     </div>
@@ -33,6 +21,6 @@ export default function CustomTab(props) {
 }
 
 CustomTab.propTypes = {
-  switch: PropTypes.string.isRequired,
-  setSwitch: PropTypes.func.isRequired,
+  tab: PropTypes.string.isRequired,
+  change: PropTypes.func.isRequired,
 };
